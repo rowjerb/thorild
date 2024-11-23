@@ -57,3 +57,42 @@
     </script>
 </body>
 </html>
+
+<button id="open-student1">Öppna Elevsida 1</button>
+
+<script>
+    // Knapp för att öppna student1.html
+    const openStudent1Button = document.getElementById('open-student1');
+    let studentWindow = null;
+
+    openStudent1Button.addEventListener('click', () => {
+        studentWindow = window.open('student1.html', '_blank');
+    });
+
+    // Funktion för att lägga till ett namn i listan
+    function addStudent(name) {
+        const li = document.createElement('li');
+        li.textContent = name;
+        li.id = name;
+        studentList.appendChild(li);
+    }
+
+    // Funktion för att ta bort ett namn från listan
+    function removeStudent(name) {
+        const li = document.getElementById(name);
+        if (li) {
+            studentList.removeChild(li);
+        }
+    }
+
+    // Lyssnar på meddelanden från andra sidor
+    window.addEventListener('message', (event) => {
+        const data = event.data;
+        if (data.action === 'add') {
+            addStudent(data.name);
+        } else if (data.action === 'remove') {
+            removeStudent(data.name);
+        }
+    });
+</script>
+
