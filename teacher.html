@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lärarsida</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .code {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lärarsida</h1>
+    <p>Kod för elever: <span class="code" id="teacher-code">1234</span></p>
+    <h2>Elevlista:</h2>
+    <ul id="student-list"></ul>
+
+    <script>
+        const studentList = document.getElementById('student-list');
+        const teacherCode = '1234';
+
+        // Funktion för att lägga till ett namn i listan
+        function addStudent(name) {
+            const li = document.createElement('li');
+            li.textContent = name;
+            li.id = name;
+            studentList.appendChild(li);
+        }
+
+        // Funktion för att ta bort ett namn från listan
+        function removeStudent(name) {
+            const li = document.getElementById(name);
+            if (li) {
+                studentList.removeChild(li);
+            }
+        }
+
+        // Lyssnar på meddelanden från andra sidor
+        window.addEventListener('message', (event) => {
+            const data = event.data;
+            if (data.action === 'add') {
+                addStudent(data.name);
+            } else if (data.action === 'remove') {
+                removeStudent(data.name);
+            }
+        });
+    </script>
+</body>
+</html>

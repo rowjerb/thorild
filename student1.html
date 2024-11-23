@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevsida 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Elevsida 1</h1>
+    <form id="student-form">
+        <label for="code">Kod:</label>
+        <input type="text" id="code" required>
+        <br><br>
+        <label for="name">Namn:</label>
+        <input type="text" id="name" required>
+        <br><br>
+        <button type="submit">Fortsätt</button>
+    </form>
+
+    <script>
+        document.getElementById('student-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const code = document.getElementById('code').value;
+            const name = document.getElementById('name').value;
+
+            // Kontrollera att koden är korrekt
+            if (code === '1234') {
+                // Spara namn och gå till nästa sida
+                sessionStorage.setItem('studentName', name);
+                window.location.href = 'student2.html';
+            } else {
+                alert('Fel kod! Försök igen.');
+            }
+        });
+    </script>
+</body>
+</html>

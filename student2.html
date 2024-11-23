@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevsida 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Elevsida 2</h1>
+    <p id="student-name"></p>
+    <button id="add-btn" style="background-color: green; color: white;">Lägg till</button>
+    <button id="remove-btn" style="background-color: red; color: white;">Ta bort</button>
+
+    <script>
+        const studentName = sessionStorage.getItem('studentName');
+        const studentNameDisplay = document.getElementById('student-name');
+        const addButton = document.getElementById('add-btn');
+        const removeButton = document.getElementById('remove-btn');
+
+        if (studentName) {
+            studentNameDisplay.textContent = `Välkommen, ${studentName}!`;
+        } else {
+            studentNameDisplay.textContent = 'Inget namn hittades.';
+        }
+
+        // Skicka meddelande till lärarsidan
+        function sendMessage(action) {
+            const teacherPage = window.opener; // Anta att lärarsidan öppnade elevsidan
+            if (teacherPage) {
+                teacherPage.postMessage({ action, name: studentName }, '*');
+            }
+        }
+
+        addButton.addEventListener('click', () => sendMessage('add'));
+        removeButton.addEventListener('click', () => sendMessage('remove'));
+    </script>
+</body>
+</html>
